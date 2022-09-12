@@ -345,6 +345,26 @@ title="Print to PDF"
    Import Dataset dari GitHub
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distraksi">
+   Distraksi
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equal-width-interval">
+   Equal-Width Interval
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equal-frequency-interval">
+   Equal-Frequency Interval
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#entropy">
+   Entropy
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -369,6 +389,26 @@ title="Print to PDF"
    Import Dataset dari GitHub
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distraksi">
+   Distraksi
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equal-width-interval">
+   Equal-Width Interval
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equal-frequency-interval">
+   Equal-Frequency Interval
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#entropy">
+   Entropy
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -387,6 +427,8 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span> 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">data</span>
 </pre></div>
@@ -394,7 +436,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-e48c1c78-a1f8-42b4-bc10-6ab86084c94f">
+  <div id="df-50895a69-8478-44dd-a7dd-ec7bfb8c617b">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -514,7 +556,7 @@ title="Print to PDF"
 </table>
 <p>150 rows × 5 columns</p>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-e48c1c78-a1f8-42b4-bc10-6ab86084c94f')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-50895a69-8478-44dd-a7dd-ec7bfb8c617b')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -565,12 +607,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-e48c1c78-a1f8-42b4-bc10-6ab86084c94f button.colab-df-convert');
+          document.querySelector('#df-50895a69-8478-44dd-a7dd-ec7bfb8c617b button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-e48c1c78-a1f8-42b4-bc10-6ab86084c94f');
+          const element = document.querySelector('#df-50895a69-8478-44dd-a7dd-ec7bfb8c617b');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -590,6 +632,1926 @@ title="Print to PDF"
     </div>
   </div>
 </div></div>
+</div>
+</section>
+<section id="distraksi">
+<h2>Distraksi<a class="headerlink" href="#distraksi" title="Permalink to this headline">#</a></h2>
+<p>Distraksi merupakan transformasi kolom menjadi type data lain. Tujuannya untuk membuat data menjadi lebih optimal yang nantinya memudahkan untuk di analisis</p>
+</section>
+<section id="equal-width-interval">
+<h2>Equal-Width Interval<a class="headerlink" href="#equal-width-interval" title="Permalink to this headline">#</a></h2>
+<p>Equal-width intervals adalah distraksi yang membagi data numerik menjadi beberapa kelompok dengan lebar kelompok yang kurang lebih sama besar.</p>
+<p>Rumus untuk membagi kedalam k interval
+\begin{align}
+w = \frac {(max -min)}{b}
+\end{align}</p>
+<p>Rumus untuk mencari batasan
+\begin{align}
+min+w, min+2w, … , min+(k-1)w
+\end{align}</p>
+<p>Mengambil sampel data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sepal_length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">]]</span>
+<span class="n">sepal_width</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sepal.width&quot;</span><span class="p">]]</span>
+<span class="n">petal_length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal.length&quot;</span><span class="p">]]</span>
+<span class="n">petal_width</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal.width&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mencari interval menggunakan metode Equal-Width Interval dengan Pandas</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">interval</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">right</span><span class="p">]</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">toCategory</span><span class="p">(</span><span class="n">list_interval</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+    <span class="c1"># get length interval</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_interval</span><span class="p">)</span>
+
+    <span class="c1"># Sorting interval</span>
+    <span class="n">sort_interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">list_interval</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Get Category from interval</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)])[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="c1"># combine into interval data</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">sort_interval</span><span class="p">,</span> <span class="n">categories</span><span class="p">))</span>
+
+    <span class="c1"># Operate All data</span>
+    <span class="n">newCol</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">datas</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">datas</span> <span class="o">&gt;=</span> <span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">datas</span> <span class="o">&lt;=</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">):</span>
+                <span class="n">newCol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">break</span>
+    <span class="c1"># return new coloumn category</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">newCol</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Membagi interval menjadi 4 bagian</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interval_sepal_length</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_sepal_width</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="s2">&quot;sepal.width&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_petal_length</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="s2">&quot;petal.length&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_petal_width</span> <span class="o">=</span> <span class="n">cut</span><span class="p">(</span><span class="s2">&quot;petal.width&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval sepal.length :&quot;</span><span class="p">,</span> <span class="n">interval_sepal_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval sepal.width  :&quot;</span><span class="p">,</span> <span class="n">interval_sepal_width</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval petal.length :&quot;</span><span class="p">,</span> <span class="n">interval_petal_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval petal.width  :&quot;</span><span class="p">,</span> <span class="n">interval_petal_width</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>interval sepal.length : [[5.2, 6.1], [4.296, 5.2], [6.1, 7.0], [7.0, 7.9]]
+interval sepal.width  : [[2.6, 3.2], [3.2, 3.8], [1.998, 2.6], [3.8, 4.4]]
+interval petal.length : [[3.95, 5.425], [0.994, 2.475], [5.425, 6.9], [2.475, 3.95]]
+interval petal.width  : [[0.0976, 0.7], [1.3, 1.9], [1.9, 2.5], [0.7, 1.3]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Menampilkan hasil dari pembagian kategori</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sepal_length</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_sepal_length</span><span class="p">,</span> <span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">sepal_width</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_sepal_width</span><span class="p">,</span> <span class="s2">&quot;sepal.width&quot;</span><span class="p">)</span>
+<span class="n">petal_length</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_petal_length</span><span class="p">,</span> <span class="s2">&quot;petal.length&quot;</span><span class="p">)</span>
+<span class="n">petal_width</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_petal_width</span><span class="p">,</span> <span class="s2">&quot;petal.width&quot;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sepal_length</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sepal_width</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">petal_length</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">petal_width</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-3339808d-ea4e-478d-afa7-908091eeeb94">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.length</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-3339808d-ea4e-478d-afa7-908091eeeb94')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-3339808d-ea4e-478d-afa7-908091eeeb94 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-3339808d-ea4e-478d-afa7-908091eeeb94');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-d2955572-b7a7-4d34-be13-acce9d96e91e">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.width</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.5</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.2</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.1</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.6</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>2.5</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>3.4</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-d2955572-b7a7-4d34-be13-acce9d96e91e')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-d2955572-b7a7-4d34-be13-acce9d96e91e button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-d2955572-b7a7-4d34-be13-acce9d96e91e');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-8381aecb-81ca-46a0-a3e5-f045d23965d8">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>petal.length</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.3</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.5</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>5.2</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>5.0</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>5.2</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>5.4</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.1</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-8381aecb-81ca-46a0-a3e5-f045d23965d8')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-8381aecb-81ca-46a0-a3e5-f045d23965d8 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-8381aecb-81ca-46a0-a3e5-f045d23965d8');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-96b4dd26-52b5-462b-b020-244a4c0c5d31">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>petal.width</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>2.3</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>1.9</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>2.0</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>2.3</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>1.8</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-96b4dd26-52b5-462b-b020-244a4c0c5d31')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-96b4dd26-52b5-462b-b020-244a4c0c5d31 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-96b4dd26-52b5-462b-b020-244a4c0c5d31');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+<section id="equal-frequency-interval">
+<h2>Equal-Frequency Interval<a class="headerlink" href="#equal-frequency-interval" title="Permalink to this headline">#</a></h2>
+<p>Equal-frequency intervals adalah distraksi yang membagi data numerik menjadi beberapa kelompok dengan jumlah anggota yang kurang lebih sama besar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sepal_length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">]]</span>
+<span class="n">sepal_width</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sepal.width&quot;</span><span class="p">]]</span>
+<span class="n">petal_length</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal.length&quot;</span><span class="p">]]</span>
+<span class="n">petal_width</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal.width&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mencari interval menggunakan metode Equal-Frequency Interval dengan qcut Pandas</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qcut</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">interval</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">right</span><span class="p">]</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Membagi data menjadi 4 bagian</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interval_sepal_length</span> <span class="o">=</span> <span class="n">qcut</span><span class="p">(</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_sepal_width</span> <span class="o">=</span> <span class="n">qcut</span><span class="p">(</span><span class="s2">&quot;sepal.width&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_petal_length</span> <span class="o">=</span> <span class="n">qcut</span><span class="p">(</span><span class="s2">&quot;petal.length&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">interval_petal_width</span> <span class="o">=</span> <span class="n">qcut</span><span class="p">(</span><span class="s2">&quot;petal.width&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval sepal.length :&quot;</span><span class="p">,</span> <span class="n">interval_sepal_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval sepal.width  :&quot;</span><span class="p">,</span> <span class="n">interval_sepal_width</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval petal.length :&quot;</span><span class="p">,</span> <span class="n">interval_petal_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;interval petal.width  :&quot;</span><span class="p">,</span> <span class="n">interval_petal_width</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>interval sepal.length : [[4.2989999999999995, 5.1], [5.1, 5.8], [5.8, 6.4], [6.4, 7.9]]
+interval sepal.width  : [[1.999, 2.8], [3.3, 4.4], [2.8, 3.0], [3.0, 3.3]]
+interval petal.length : [[0.999, 1.6], [4.35, 5.1], [5.1, 6.9], [1.6, 4.35]]
+interval petal.width  : [[0.099, 0.3], [1.3, 1.8], [0.3, 1.3], [1.8, 2.5]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hasil Pembagian Kategori</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sepal_length</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_sepal_length</span><span class="p">,</span> <span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">sepal_width</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_sepal_width</span><span class="p">,</span> <span class="s2">&quot;sepal.width&quot;</span><span class="p">)</span>
+<span class="n">petal_length</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_petal_length</span><span class="p">,</span> <span class="s2">&quot;petal.length&quot;</span><span class="p">)</span>
+<span class="n">petal_width</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toCategory</span><span class="p">(</span><span class="n">interval_petal_width</span><span class="p">,</span> <span class="s2">&quot;petal.width&quot;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sepal_length</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sepal_width</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">petal_length</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">petal_width</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-56bde4f3-86de-4588-acfe-ea43efdf4b94">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.length</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-56bde4f3-86de-4588-acfe-ea43efdf4b94')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-56bde4f3-86de-4588-acfe-ea43efdf4b94 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-56bde4f3-86de-4588-acfe-ea43efdf4b94');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-e6deb726-eb0b-461e-bfdd-8753c2bced69">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.width</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.5</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.2</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.1</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.6</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>2.5</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>3.4</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>3.0</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-e6deb726-eb0b-461e-bfdd-8753c2bced69')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-e6deb726-eb0b-461e-bfdd-8753c2bced69 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-e6deb726-eb0b-461e-bfdd-8753c2bced69');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-e66bc0e9-026d-424b-ac0f-02234f8c75dd">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>petal.length</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.3</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.5</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>5.2</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>5.0</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>5.2</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>5.4</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.1</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-e66bc0e9-026d-424b-ac0f-02234f8c75dd')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-e66bc0e9-026d-424b-ac0f-02234f8c75dd button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-e66bc0e9-026d-424b-ac0f-02234f8c75dd');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div><div class="output text_html">
+  <div id="df-006f740d-76b8-499a-bd10-68a8fb983931">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>petal.width</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>2.3</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>1.9</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>2.0</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>2.3</td>
+      <td>D</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>1.8</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-006f740d-76b8-499a-bd10-68a8fb983931')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-006f740d-76b8-499a-bd10-68a8fb983931 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-006f740d-76b8-499a-bd10-68a8fb983931');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+<section id="entropy">
+<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this headline">#</a></h2>
+<p>Entropy merupakan informasi yang menggambarkan seberapa konsisten pemisah akan cocok dengan pengklasifikasi</p>
+<p>Rumus mencari entrhopy
+\begin{align}
+Entrophy = - \sum P_i log_2 p_i
+\end{align}</p>
+<p>Rumus mencari informasi
+\begin{align}
+info(D_{new}) = \frac {|D_1|}{|D|} Entrophy(D_2) +  \frac {|D_2|}{|D|} Entrophy(D_2)
+\end{align}</p>
+<p>Rumus mencari gain
+\begin{align}
+gain = D_{new} - D_{initial}
+\end{align}</p>
+<p>Membuat sample data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">]]</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-7623d349-2563-43c9-ad2e-ba2c82dc8592">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>150.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5.843333</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.828066</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>4.300000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>5.100000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>5.800000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.400000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>7.900000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-7623d349-2563-43c9-ad2e-ba2c82dc8592')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-7623d349-2563-43c9-ad2e-ba2c82dc8592 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-7623d349-2563-43c9-ad2e-ba2c82dc8592');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<p>Membuat random kategori untuk semua data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sample</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span> <span class="p">)</span>
+<span class="n">sample</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-e5b00e54-9abd-4fba-9997-487d1e291ff8">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal.length</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 2 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-e5b00e54-9abd-4fba-9997-487d1e291ff8')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-e5b00e54-9abd-4fba-9997-487d1e291ff8 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-e5b00e54-9abd-4fba-9997-487d1e291ff8');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<p>Membuat fungsi getOverallCategory digunakan untuk menghitung data keseluruhan yang nantinya akan digunakan untuk menghitung entropy</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getOverallCategory</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fungsi splitter digunakan untuk membuat split antara value yang telah di tentukan lalu mengembalikan data yang telah dipisahkan</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">splitter</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">tuple</span><span class="p">:</span>
+    <span class="c1"># get data less and greater from value</span>
+    <span class="n">less</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">sample</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="p">]</span>
+    <span class="n">greater</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="n">sample</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">value</span><span class="p">]</span>
+
+    <span class="c1"># calculate into category for each data</span>
+    <span class="n">less_group</span> <span class="o">=</span> <span class="n">less</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">greater_group</span> <span class="o">=</span> <span class="n">greater</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="c1"># get value based on category</span>
+    <span class="n">less_category_A</span> <span class="o">=</span> <span class="n">less_group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+
+    <span class="n">less_category_B</span> <span class="o">=</span> <span class="n">less_group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">greater_category_A</span> <span class="o">=</span> <span class="n">greater_group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">greater_category_B</span> <span class="o">=</span> <span class="n">greater_group</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="p">[</span><span class="n">less_category_A</span><span class="p">,</span> <span class="n">less_category_B</span><span class="p">,</span> <span class="n">less_category_A</span> <span class="o">+</span> <span class="n">less_category_B</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">greater_category_A</span><span class="p">,</span> <span class="n">greater_category_B</span><span class="p">,</span> <span class="n">greater_category_A</span> <span class="o">+</span> <span class="n">greater_category_B</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Buat Fungsi untuk mencari nilai entropy</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">])</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Membuat fungsi gain dan info. Fungsi gain untuk menghitung selsih antara entropy awal dengan yang baru</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="o">*</span> <span class="n">entropy</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">entropy</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">r1</span> <span class="o">+</span> <span class="n">r2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gain</span><span class="p">(</span><span class="n">Einitial</span><span class="p">,</span> <span class="n">Enew</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Einitial</span> <span class="o">-</span> <span class="n">Enew</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dinitial</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">getOverallCategory</span><span class="p">(</span><span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">entropy_d</span> <span class="o">=</span> <span class="n">entropy</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">entropy_d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(68, 82, 150)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.993707106604508
+</pre></div>
+</div>
+</div>
+</div>
+<p>Melakukan beberapa split untuk menemukan informasi yang terbaik</p>
+<p>Split 1: 4.5</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">split1</span> <span class="o">=</span> <span class="n">splitter</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">info_split1</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="n">split1</span><span class="p">)</span>
+<span class="n">gain</span><span class="p">(</span><span class="n">entropy_d</span><span class="p">,</span> <span class="n">info_split1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0069930419733333915
+</pre></div>
+</div>
+</div>
+</div>
+<p>Split 2: 6.5</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">split2</span> <span class="o">=</span> <span class="n">splitter</span><span class="p">(</span><span class="mf">6.5</span><span class="p">,</span> <span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">info_split1</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="n">split1</span><span class="p">)</span>
+<span class="n">gain</span><span class="p">(</span><span class="n">entropy_d</span><span class="p">,</span> <span class="n">info_split1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0069930419733333915
+</pre></div>
+</div>
+</div>
+</div>
+<p>Split 3: 7.2</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">split3</span> <span class="o">=</span> <span class="n">splitter</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="s2">&quot;sepal.length&quot;</span><span class="p">)</span>
+<span class="n">info_split1</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="n">split1</span><span class="p">)</span>
+<span class="n">gain</span><span class="p">(</span><span class="n">entropy_d</span><span class="p">,</span> <span class="n">info_split1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0069930419733333915
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
