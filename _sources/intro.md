@@ -1,6 +1,6 @@
-# Tugas Penambangan Data
+# Selamat Datang
 
-Berisi kumpulan tugas penambangan data semester 5
+Disini Berisi kumpulan tugas penambangan data semester 5
 
 ```{tableofcontents}
 ```
