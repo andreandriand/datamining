@@ -33,7 +33,5 @@ Regression adalah teknik yang menjelaskan variabel dependen melalui proses anali
 * Clustering
 Terakhir, metode clustering. Clustering digunakan dalam membagi kumpulan data menjadi beberapa kelompok berdasarkan kemiripan atribut yang dimiliki. Contoh kasusnya adalah Customer Segmentation. Ia membagi pelanggan ke dalam beberapa grup berdasarkan tingkat kemiripannya.
 
-# Tugas
-
 ```{tableofcontents}
 ```
