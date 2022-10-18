@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Tugas 1 &#8212; Andrian Dwi Baitur Rizky</title>
+    <title>Dissimilarity (Tugas 1) &#8212; Andrian Dwi Baitur Rizky</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/logo.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tugas 2" href="tugas2.html" />
+    <link rel="next" title="Diskritisasi (Tugas 2)" href="tugas2.html" />
     <link rel="prev" title="Selamat Datang" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -122,27 +122,27 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Tugas 1
+   Dissimilarity (Tugas 1)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="tugas2.html">
-   Tugas 2
+   Diskritisasi (Tugas 2)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="k-nn.html">
-   Implementasi Algoritma K-NN pada Dataset Iris
+   K-NN (Tugas 3)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="naive-bayes.html">
-   Implementasi Naive Bayes
+   Naive Bayes (Tugas 4)
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="k-means.html">
-   K-Means Clustering
+   K-Means Clustering (Tugas 5)
   </a>
  </li>
  <li class="toctree-l1">
@@ -389,6 +389,16 @@ title="Print to PDF"
    Numeric Attribute : Minkowski Distance
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#manhattan-distance">
+   Manhattan Distance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#euclidean-distance">
+   Euclidean Distance
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -398,7 +408,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tugas 1</h1>
+                <h1>Dissimilarity (Tugas 1)</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -423,6 +433,16 @@ title="Print to PDF"
    Numeric Attribute : Minkowski Distance
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#manhattan-distance">
+   Manhattan Distance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#euclidean-distance">
+   Euclidean Distance
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -433,8 +453,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="tugas-1">
-<h1>Tugas 1<a class="headerlink" href="#tugas-1" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="dissimilarity-tugas-1">
+<h1>Dissimilarity (Tugas 1)<a class="headerlink" href="#dissimilarity-tugas-1" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p>Cari dataset dari url</p></li>
 <li><p>Tentukan dissimilarity :</p></li>
@@ -474,7 +494,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-46de1a19-a0e6-44bd-9556-2e4b3c1ce636">
+  <div id="df-46afae3e-f9ba-414d-85bd-e22c5af3d845">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -618,7 +638,7 @@ title="Print to PDF"
 </table>
 <p>1000 rows × 7 columns</p>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-46de1a19-a0e6-44bd-9556-2e4b3c1ce636')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-46afae3e-f9ba-414d-85bd-e22c5af3d845')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -669,12 +689,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-46de1a19-a0e6-44bd-9556-2e4b3c1ce636 button.colab-df-convert');
+          document.querySelector('#df-46afae3e-f9ba-414d-85bd-e22c5af3d845 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-46de1a19-a0e6-44bd-9556-2e4b3c1ce636');
+          const element = document.querySelector('#df-46afae3e-f9ba-414d-85bd-e22c5af3d845');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -703,7 +723,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-82eb1f1a-f2be-4b48-a23f-015d3a233029">
+  <div id="df-d3d13f43-e8ab-4c35-9878-06d26bb42af4">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -786,7 +806,7 @@ title="Print to PDF"
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-82eb1f1a-f2be-4b48-a23f-015d3a233029')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-d3d13f43-e8ab-4c35-9878-06d26bb42af4')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -837,12 +857,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-82eb1f1a-f2be-4b48-a23f-015d3a233029 button.colab-df-convert');
+          document.querySelector('#df-d3d13f43-e8ab-4c35-9878-06d26bb42af4 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-82eb1f1a-f2be-4b48-a23f-015d3a233029');
+          const element = document.querySelector('#df-d3d13f43-e8ab-4c35-9878-06d26bb42af4');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -914,7 +934,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>Manhattan Distance</p>
+</section>
+<section id="manhattan-distance">
+<h2>Manhattan Distance<a class="headerlink" href="#manhattan-distance" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">diss2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
@@ -931,7 +953,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>Euclidean Distance</p>
+</section>
+<section id="euclidean-distance">
+<h2>Euclidean Distance<a class="headerlink" href="#euclidean-distance" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">diss2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
@@ -988,7 +1012,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="tugas2.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tugas 2</p>
+        <p class="prev-next-title">Diskritisasi (Tugas 2)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
