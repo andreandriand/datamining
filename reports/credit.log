@@ -17,68 +17,28 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-gaussian = GaussianNB()
-gaussian.fit(X_train, y_train)
-Y_pred = gaussian.predict(X_test) 
-accuracy_nb=round(accuracy_score(y_test,Y_pred)* 100, 2)
-acc_gaussian = round(gaussian.score(X_train, y_train) * 100, 2)
+# data latih (nilai data)
+X_train 
 
-cm = confusion_matrix(y_test, Y_pred)
-accuracy = accuracy_score(y_test,Y_pred)
-precision =precision_score(y_test, Y_pred,average='micro')
-recall =  recall_score(y_test, Y_pred,average='micro')
-f1 = f1_score(y_test,Y_pred,average='micro')
-print('Confusion matrix for Naive Bayes\n',cm)
-print('accuracy_Naive Bayes: %.3f' %accuracy)
-print('precision_Naive Bayes: %.3f' %precision)
-print('recall_Naive Bayes: %.3f' %recall)
-print('f1-score_Naive Bayes : %.3f' %f1)
+# data tes (nilai data)
+X_test 
+
+# data latih (kelas data)
+y_train
+
+# data tes (kelas data)
+y_test
 ------------------
 
 [0;31m[0m
-[0;31mValueError[0mTraceback (most recent call last)
-[0;32m<ipython-input-6-8175563c0ce4>[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0mgaussian[0m [0;34m=[0m [0mGaussianNB[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0mgaussian[0m[0;34m.[0m[0mfit[0m[0;34m([0m[0mX_train[0m[0;34m,[0m [0my_train[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      3[0m [0mY_pred[0m [0;34m=[0m [0mgaussian[0m[0;34m.[0m[0mpredict[0m[0;34m([0m[0mX_test[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0maccuracy_nb[0m[0;34m=[0m[0mround[0m[0;34m([0m[0maccuracy_score[0m[0;34m([0m[0my_test[0m[0;34m,[0m[0mY_pred[0m[0;34m)[0m[0;34m*[0m [0;36m100[0m[0;34m,[0m [0;36m2[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0macc_gaussian[0m [0;34m=[0m [0mround[0m[0;34m([0m[0mgaussian[0m[0;34m.[0m[0mscore[0m[0;34m([0m[0mX_train[0m[0;34m,[0m [0my_train[0m[0;34m)[0m [0;34m*[0m [0;36m100[0m[0;34m,[0m [0;36m2[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0mTraceback (most recent call last)
+[0;32m<ipython-input-17-cc0273241bba>[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;31m# data latih (nilai data)[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mX_train[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;34m[0m[0m
+[1;32m      4[0m [0;31m# data tes (nilai data)[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mX_test[0m[0;34m[0m[0;34m[0m[0m
 
-[0;32m/usr/local/lib/python3.7/dist-packages/sklearn/naive_bayes.py[0m in [0;36mfit[0;34m(self, X, y, sample_weight)[0m
-[1;32m    244[0m         [0my[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_validate_data[0m[0;34m([0m[0my[0m[0;34m=[0m[0my[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    245[0m         return self._partial_fit(
-[0;32m--> 246[0;31m             [0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mnp[0m[0;34m.[0m[0munique[0m[0;34m([0m[0my[0m[0;34m)[0m[0;34m,[0m [0m_refit[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m [0msample_weight[0m[0;34m=[0m[0msample_weight[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    247[0m         )
-[1;32m    248[0m [0;34m[0m[0m
-
-[0;32m/usr/local/lib/python3.7/dist-packages/sklearn/naive_bayes.py[0m in [0;36m_partial_fit[0;34m(self, X, y, classes, _refit, sample_weight)[0m
-[1;32m    400[0m [0;34m[0m[0m
-[1;32m    401[0m         [0mfirst_call[0m [0;34m=[0m [0m_check_partial_fit_first_call[0m[0;34m([0m[0mself[0m[0;34m,[0m [0mclasses[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 402[0;31m         [0mX[0m[0;34m,[0m [0my[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_validate_data[0m[0;34m([0m[0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mreset[0m[0;34m=[0m[0mfirst_call[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    403[0m         [0;32mif[0m [0msample_weight[0m [0;32mis[0m [0;32mnot[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    404[0m             [0msample_weight[0m [0;34m=[0m [0m_check_sample_weight[0m[0;34m([0m[0msample_weight[0m[0;34m,[0m [0mX[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m/usr/local/lib/python3.7/dist-packages/sklearn/base.py[0m in [0;36m_validate_data[0;34m(self, X, y, reset, validate_separately, **check_params)[0m
-[1;32m    579[0m                 [0my[0m [0;34m=[0m [0mcheck_array[0m[0;34m([0m[0my[0m[0;34m,[0m [0;34m**[0m[0mcheck_y_params[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    580[0m             [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 581[0;31m                 [0mX[0m[0;34m,[0m [0my[0m [0;34m=[0m [0mcheck_X_y[0m[0;34m([0m[0mX[0m[0;34m,[0m [0my[0m[0;34m,[0m [0;34m**[0m[0mcheck_params[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    582[0m             [0mout[0m [0;34m=[0m [0mX[0m[0;34m,[0m [0my[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    583[0m [0;34m[0m[0m
-
-[0;32m/usr/local/lib/python3.7/dist-packages/sklearn/utils/validation.py[0m in [0;36mcheck_X_y[0;34m(X, y, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, multi_output, ensure_min_samples, ensure_min_features, y_numeric, estimator)[0m
-[1;32m    974[0m         [0mensure_min_samples[0m[0;34m=[0m[0mensure_min_samples[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    975[0m         [0mensure_min_features[0m[0;34m=[0m[0mensure_min_features[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 976[0;31m         [0mestimator[0m[0;34m=[0m[0mestimator[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    977[0m     )
-[1;32m    978[0m [0;34m[0m[0m
-
-[0;32m/usr/local/lib/python3.7/dist-packages/sklearn/utils/validation.py[0m in [0;36mcheck_array[0;34m(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator)[0m
-[1;32m    744[0m                     [0marray[0m [0;34m=[0m [0marray[0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mdtype[0m[0;34m,[0m [0mcasting[0m[0;34m=[0m[0;34m"unsafe"[0m[0;34m,[0m [0mcopy[0m[0;34m=[0m[0;32mFalse[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    745[0m                 [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 746[0;31m                     [0marray[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0masarray[0m[0;34m([0m[0marray[0m[0;34m,[0m [0morder[0m[0;34m=[0m[0morder[0m[0;34m,[0m [0mdtype[0m[0;34m=[0m[0mdtype[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    747[0m             [0;32mexcept[0m [0mComplexWarning[0m [0;32mas[0m [0mcomplex_warning[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    748[0m                 raise ValueError(
-
-[0;31mValueError[0m: could not convert string to float: 'AGR-000980'
-ValueError: could not convert string to float: 'AGR-000980'
+[0;31mNameError[0m: name 'X_train' is not defined
+NameError: name 'X_train' is not defined
 
